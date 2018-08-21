@@ -192,3 +192,34 @@ I hope that you can re-review and give us the application to review and publish 
 
 顺便说下，苹果的三种审核机制：1，预审核 --- 扫描 api，及 plist 文件字符缺失等；此处分两步，第一步为上传时苹果 Application Loador 等应用对于适配 icon 等的检查，第二步为上传后苹果的功能性检查，例如配置了 Push 功能但有缺失或者未打开功能，则会邮件提示等等； 2，机审--- 此处扫描支付 SDK 等，及马甲情况，机器扫描主要看代码块，可参考百度蜘蛛抓取网站模块原理；如遇部分无法过机审情况可尝试加速绕过机审（不是 100% 成功）； 3，人工审核--- 此处主要检测功能或者 App 体验测试，例如用测试账号登录 App 体验功能，或其他是否明显 bug 等，ipv6 也在此处检测。
 
+### 8.SDK 值无效。在 App Name 中为 LC_VERSION_MIN_IPHONEOS 的 SDK 部分提供的值为 12.0，该值大于允许的最大值 11.4。
+
+#### 环境参数：
+
+```
+App Store Review
+```
+
+#### 问题分析：
+
+上传 App 到应用商店时使用的 Xcode，被修改了内部文件用以支持最新的测试版系统，导致上传后无法提交应用审核。
+
+#### 解决方法：
+
+用纯净无修改的 Xcode 重新上传可解决问题。
+
+### 9.Missing Push Notification Entitlement - Your app appears to register with the Apple Push Notification service, but the app signature's entitlements do not include the "aps-environment" entitlement. If your app uses the Apple Push Notification service, make sure your App ID is enabled for Push Notification in the Provisioning Portal, and resubmit after signing your app with a Distribution provisioning profile that includes the "aps-environment" entitlement. 
+
+#### 环境参数：
+
+```
+App Store Review
+```
+
+#### 问题分析：
+
+上传 App 到应用商店时，注册了推送通知证书，但提交时在工程内部未勾选推送通知功能。
+
+#### 解决方法：
+
+勾选通知功能，重新上传即可解决问题。
